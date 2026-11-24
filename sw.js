@@ -1,6 +1,6 @@
 /* SCS SUIT — শুধু অ্যাপের খোলস ক্যাশ করে; প্রতিটি অ্যাপের ডাটা সবসময় লাইভ আসে।
    apps.js বা অন্য ফাইল বদলালে VERSION ১ বাড়ান। */
-var VERSION = 1;
+var VERSION = 2;
 var CACHE = 'scs-suit-v' + VERSION;
 var SHELL = ['./', './index.html', './apps.js', './manifest.webmanifest', './logo.png', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 self.addEventListener('install', function (e) { e.waitUntil(caches.open(CACHE).then(function (c) { return c.addAll(SHELL); }).then(function () { return self.skipWaiting(); })); });
