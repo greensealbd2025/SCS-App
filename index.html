@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
+<title>SCS SUIT</title>
+<meta name="description" content="SCS SUIT — Swarup Construction Solution-এর সব অ্যাপ এক জায়গায়">
+<meta name="theme-color" content="#db2777">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="SCS SUIT">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+  :root{--bar:#db2777;--bar2:#be185d;--ink:#0f172a;--mute:#64748b;--bg:#f1f5f9;--card:#fff;--line:#e2e8f0;--bh:40px}
+  @media (prefers-color-scheme:dark){:root{--ink:#e2e8f0;--mute:#94a3b8;--bg:#0b1220;--card:#111a2e;--line:#1e293b}}
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  /* টেনে নামালে রিফ্রেশ বন্ধ */
+  html,body{margin:0;height:100%;overflow:hidden;overscroll-behavior:none;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Bengali",sans-serif}
+  /* উপরের সরু বার */
+  #bar{position:fixed;left:0;right:0;top:0;z-index:20;height:calc(var(--bh) + env(safe-area-inset-top));padding:env(safe-area-inset-top) max(8px,env(safe-area-inset-right)) 0 max(8px,env(safe-area-inset-left));background:var(--bar);color:#fff;display:flex;align-items:center;gap:6px;box-shadow:0 1px 4px rgba(0,0,0,.18);user-select:none;-webkit-user-select:none}
+  .chip{display:flex;align-items:center;gap:6px;background:#fff;color:#0f172a;border-radius:8px;padding:2px 8px 2px 3px;height:30px;border:0;cursor:pointer;flex:none}
+  .chip img{height:26px;width:26px;object-fit:contain}
+  .chip b{font-size:13px;font-weight:900;letter-spacing:.02em;white-space:nowrap}
+  #cur{flex:1;min-width:0;font-size:12.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:.95;padding-left:4px}
+  .ib{flex:none;width:32px;height:30px;border-radius:8px;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.12);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
+  .ib:active{transform:scale(.94)}.ib:hover{background:rgba(255,255,255,.22)}
+  .ib svg{width:17px;height:17px}
+  .ib.spin svg{animation:r .7s linear infinite}
+  .hide{display:none!important}
+  /* হোম: অ্যাপের তালিকা */
+  #home{position:fixed;left:0;right:0;bottom:0;top:calc(var(--bh) + env(safe-area-inset-top));overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;padding:14px max(12px,env(safe-area-inset-right)) calc(20px + env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left))}
+  .wrap{max-width:1100px;margin:0 auto}
+  .hd{display:flex;align-items:center;gap:12px;background:#0f172a;color:#fff;border-radius:16px;padding:12px 14px;margin-bottom:12px}
+  .hd img{width:52px;height:52px;object-fit:contain;background:#fff;border-radius:12px;padding:3px;flex:none}
+  .hd h1{margin:0;font-size:18px;font-weight:900;letter-spacing:.03em}
+  .hd p{margin:2px 0 0;font-size:11.5px;color:#cbd5e1}
+  #q{width:100%;height:38px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:0 12px;font-size:14px;margin-bottom:12px;outline:none}
+  #q:focus{border-color:var(--bar);box-shadow:0 0 0 3px rgba(219,39,119,.15)}
+  #grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+  .app{position:relative;display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;background:var(--card);border:1.5px solid var(--line);border-radius:16px;padding:14px 8px 12px;cursor:pointer;color:var(--ink);font:inherit;transition:transform .12s,box-shadow .12s,border-color .12s}
+  .app:hover{border-color:var(--c,#db2777);box-shadow:0 6px 18px rgba(15,23,42,.08)}
+  .app:active{transform:scale(.97)}
+  .app .lg{width:58px;height:58px;border-radius:14px;background:#fff;display:flex;align-items:center;justify-content:center;border:2px solid var(--c,#db2777)}
+  .app .lg img{width:48px;height:48px;object-fit:contain}
+  .app .nm{font-size:12.5px;font-weight:800;line-height:1.25}
+  .app .dot{position:absolute;top:8px;right:8px;width:8px;height:8px;border-radius:50%;background:#22c55e;display:none}
+  .app.open .dot{display:block}
+  .empty{color:var(--mute);font-size:13px;text-align:center;padding:30px 0}
+  .ft{margin-top:16px;text-align:center;font-size:11px;color:var(--mute)}
+  /* খোলা অ্যাপ */
+  #frames{position:fixed;left:0;right:0;bottom:0;top:calc(var(--bh) + env(safe-area-inset-top));background:#fff}
+  #frames iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;background:#fff}
+  #ld{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:#fff;color:#334155;font-size:13px;z-index:2}
+  #ld img{width:64px;height:64px;object-fit:contain}
+  .sp{width:26px;height:26px;border:3px solid #fbcfe8;border-top-color:#db2777;border-radius:50%;animation:r .8s linear infinite}
+  @keyframes r{to{transform:rotate(360deg)}}
+  #off{position:fixed;left:0;right:0;top:calc(var(--bh) + env(safe-area-inset-top));z-index:15;background:#fef3c7;color:#92400e;font-size:12.5px;font-weight:700;text-align:center;padding:6px}
+  #ins,#ios{position:fixed;z-index:30;bottom:calc(12px + env(safe-area-inset-bottom))}
+  #ins{right:12px;background:#db2777;color:#fff;border:0;border-radius:12px;padding:10px 16px;font-weight:800;font-size:14px;box-shadow:0 6px 20px rgba(219,39,119,.35);cursor:pointer}
+  #ios{left:12px;right:12px;background:#0f172a;color:#fff;border-radius:14px;padding:12px 14px;font-size:14px;line-height:1.5}
+  #ios b{color:#f9a8d4}#ios span{float:right;cursor:pointer;font-weight:800;padding-left:10px}
+  @media (max-width:420px){#grid{grid-template-columns:repeat(2,1fr)}.chip b{font-size:12px}}
+</style>
+</head>
+<body>
+<header id="bar">
+  <button class="chip" id="homeBtn" title="সব অ্যাপ"><img src="logo.png" alt="SCS"><b>SCS SUIT</b></button>
+  <div id="cur"></div>
+  <button class="ib hide" id="appsBtn" title="সব অ্যাপ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></button>
+  <button class="ib hide" id="extBtn" title="ব্রাউজারে খুলুন (প্রিন্টের জন্যও)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6"/><path d="M20 4l-9 9"/><path d="M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg></button>
+  <button class="ib" id="refBtn" title="রিফ্রেশ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg></button>
+</header>
+
+<main id="home">
+  <div class="wrap">
+    <div class="hd"><img src="logo.png" alt=""><div><h1>SCS SUIT</h1><p>Swarup Construction Solution — সব অ্যাপ এক জায়গায়</p></div></div>
+    <input id="q" type="search" placeholder="অ্যাপ খুঁজুন…" autocomplete="off">
+    <div id="grid"></div>
+    <div class="ft">© <span id="yr"></span> Swarup Construction Solution (SCS)</div>
+  </div>
+</main>
+
+<section id="frames" class="hide"><div id="ld" class="hide"><img src="logo.png" alt=""><div class="sp"></div><div id="ldt">লোড হচ্ছে…</div></div></section>
+<div id="off" class="hide">ইন্টারনেট সংযোগ নেই — সংযোগ ফিরলে রিফ্রেশ চাপুন</div>
+<button id="ins" class="hide">📲 SCS SUIT ইনস্টল করুন</button>
+<div id="ios" class="hide"><span id="iosX">✕</span>iPhone / iPad-এ ইনস্টল: নিচের <b>Share</b> (□↑) চাপুন, তারপর <b>Add to Home Screen</b>।</div>
+
+<script src="apps.js"></script>
+<script>
+(function () {
+  'use strict';
+  var APPS = (window.SCS_APPS || []).filter(function (a) { return a && a.name && /^https:\/\//.test(a.url || ''); });
+  var $ = function (id) { return document.getElementById(id); };
+  var KEEP = 4;              /* একসাথে কয়টি অ্যাপ খোলা রাখবে (দ্রুত বদলানোর জন্য) */
+  var open = {}, order = [], cur = -1;
+  var esc = function (s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
+  var logoOf = function (a) { return a.logo || 'logo.png'; };
+  $('yr').textContent = new Date().getFullYear();
+
+  function drawGrid() {
+    var q = $('q').value.trim().toLowerCase(), html = '';
+    APPS.forEach(function (a, i) {
+      if (q && a.name.toLowerCase().indexOf(q) < 0) return;
+      html += '<button class="app' + (open[i] ? ' open' : '') + '" data-i="' + i + '" style="--c:' + esc(a.color || '#db2777') + '"><span class="dot"></span><span class="lg"><img src="' + esc(logoOf(a)) + '" alt="" loading="lazy" onerror="this.src=\'logo.png\'"></span><span class="nm">' + esc(a.name) + '</span></button>';
+    });
+    $('grid').innerHTML = html || '<div class="empty">কোনো অ্যাপ পাওয়া যায়নি</div>';
+  }
+
+  function showHome() {
+    cur = -1; $('frames').classList.add('hide'); $('home').classList.remove('hide');
+    $('cur').textContent = ''; $('appsBtn').classList.add('hide'); $('extBtn').classList.add('hide');
+    document.title = 'SCS SUIT'; drawGrid();
+    try { history.replaceState(null, '', location.pathname); } catch (e) {}
+  }
+
+  function loading(on, name) { $('ld').classList.toggle('hide', !on); if (name) $('ldt').textContent = name + ' লোড হচ্ছে…'; }
+
+  function openApp(i) {
+    var a = APPS[i]; if (!a) return;
+    cur = i; $('home').classList.add('hide'); $('frames').classList.remove('hide');
+    $('cur').textContent = a.name; $('appsBtn').classList.remove('hide'); $('extBtn').classList.remove('hide');
+    document.title = a.name + ' — SCS SUIT';
+    Object.keys(open).forEach(function (k) { open[k].style.visibility = +k === i ? 'visible' : 'hidden'; open[k].style.zIndex = +k === i ? 1 : 0; });
+    order = order.filter(function (k) { return k !== i; }); order.push(i);
+    if (!open[i]) {
+      var f = document.createElement('iframe');
+      f.title = a.name; f.allow = 'clipboard-read; clipboard-write; fullscreen; camera; microphone; geolocation';
+      f.addEventListener('load', function () { if (cur === i) loading(false); });
+      f.src = a.url; $('frames').appendChild(f); open[i] = f; loading(true, a.name);
+      setTimeout(function () { if (cur === i) loading(false); }, 20000);
+      while (order.length > KEEP) { var old = order.shift(); if (open[old]) { open[old].remove(); delete open[old]; } }
+    } else loading(false);
+    try { history.replaceState(null, '', '#' + i); } catch (e) {}
+  }
+
+  function refresh() {
+    var b = $('refBtn'); b.classList.add('spin'); setTimeout(function () { b.classList.remove('spin'); }, 900);
+    if (cur < 0) { location.reload(); return; }
+    var f = open[cur]; if (!f) return openApp(cur);
+    loading(true, APPS[cur].name); f.src = 'about:blank'; setTimeout(function () { f.src = APPS[cur].url; }, 30);
+  }
+
+  $('grid').addEventListener('click', function (e) { var b = e.target.closest('.app'); if (b) openApp(+b.getAttribute('data-i')); });
+  $('q').addEventListener('input', drawGrid);
+  $('homeBtn').onclick = showHome; $('appsBtn').onclick = showHome; $('refBtn').onclick = refresh;
+  $('extBtn').onclick = function () { if (cur >= 0) window.open(APPS[cur].url, '_blank', 'noopener'); };
+  document.addEventListener('keydown', function (e) { if (e.key === 'F5' || ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'r')) { e.preventDefault(); refresh(); } });
+
+  /* ইন্টারনেট */
+  var net = function () { $('off').classList.toggle('hide', navigator.onLine); };
+  window.addEventListener('online', net); window.addEventListener('offline', net); net();
+
+  /* ইনস্টল (Android / Desktop / Mac Chrome-Edge) */
+  if ('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(function () {});
+  var dp = null;
+  window.addEventListener('beforeinstallprompt', function (e) { e.preventDefault(); dp = e; $('ins').classList.remove('hide'); });
+  $('ins').onclick = function () { if (!dp) return; dp.prompt(); dp.userChoice.finally(function () { dp = null; $('ins').classList.add('hide'); }); };
+  window.addEventListener('appinstalled', function () { $('ins').classList.add('hide'); });
+  /* iPhone / iPad: Add to Home Screen নির্দেশনা (একবার) */
+  var ios = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  var standalone = window.navigator.standalone || matchMedia('(display-mode: standalone)').matches;
+  try { if (ios && !standalone && !localStorage.getItem('scs_suit_ios')) { $('ios').classList.remove('hide'); localStorage.setItem('scs_suit_ios', '1'); } } catch (e) {}
+  $('iosX').onclick = function () { $('ios').classList.add('hide'); };
+
+  drawGrid();
+  var h = parseInt((location.hash || '').slice(1), 10);
+  if (h >= 0 && APPS[h]) openApp(h);
+})();
+</script>
+</body>
+</html>
