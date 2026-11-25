@@ -22,5 +22,6 @@ window.SCS_APPS = [
   { name: 'SCS Quotation Submit App', url: 'https://script.google.com/macros/s/AKfycbwnEV3_ODsLMvHgunQ0RMat0P1AJT61AJKGnkAdzr-bWUhxDLlLVvdeA44x3nm0KRQI/exec', color: '#4f46e5' },
   { name: 'SCS Running & Complete Projects', url: 'https://script.google.com/macros/s/AKfycbwVki6uy4Dbs1VaNaUot24c4Wi9RjChnQFletCxsRpa_WF454gn5Aqx2LWyxheWjvhZyw/exec', color: '#16a34a' },
   { name: 'SCS Project & Chemical Collection', url: 'https://script.google.com/macros/s/AKfycbxOEz9CUHVDSdsKDcC4oK_ox596VAUYV_vwSwF9pyXjHYGcNEZM1v8aA4Y6vn5WnIRq0g/exec', color: '#db2777' },
+  { name: 'SCS Workspeace', url: 'https://script.google.com/macros/s/AKfycbwM2clyX7BgPSvrB9H4n1bGtPoqlZjkKAguA2ldzm9-cEQZgcSLQroqzPLn-jHOy_Et9w/exec', color: '#db2777' },
   { name: 'SCS Daily Expense', url: 'https://script.google.com/macros/s/AKfycbyS4bfGHnkqA7vW_MLRudWpx-j6w3yoKefhpQ-GHeN0I0BVEhBu36HguXGR7isgxHoU/exec', color: '#dc2626' }
-  { name: 'SCS Workspeace', url: 'https://script.google.com/macros/s/AKfycbwM2clyX7BgPSvrB9H4n1bGtPoqlZjkKAguA2ldzm9-cEQZgcSLQroqzPLn-jHOy_Et9w/exec', color: '#dc2626' }];
+ ];
